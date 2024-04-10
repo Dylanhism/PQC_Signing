@@ -1,0 +1,15 @@
+SPHINCS SHAKE_128f SIGNATURE GENERATOR
+ * By Liam Kelly and Dylan Hughes
+ * March 2024
+ * License: MIT
+
+Program generates PEM files for each file in a folder. PEMs are stored in the same directory as its relevent file.
+
+Assumes host is verified. 
+
+USAGE
+
+To run: 
+    >> python3 main.py
+
+Input: you must supply the program with a valid folder path (relative or full) upon request.
