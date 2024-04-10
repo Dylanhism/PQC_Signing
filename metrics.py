@@ -34,7 +34,7 @@ def graph():
 
         startTime = time.time()
         main.batch_verify('./test', 'shake_256f')
-        verify_times[0][i] = time.time() - startTime
+        verify_times[1][i] = time.time() - startTime
 
     for i in range(nAlgs):
         processAvgs[i] = np.average(process_times[i])
