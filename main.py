@@ -6,13 +6,15 @@ import secrets
 
 
 def prepare_signature(message: bytes, type: str):
-    seed = secrets.token_bytes(config.seed_len_128f)
+    seed = ' '
 
-    public_key, secret_key, signature = ''
+    public_key, secret_key, signature = ' ', ' ', ' '
     if type=='shake_128f':
+        seed = secrets.token_bytes(config.seed_len_128f)
         public_key, secret_key = pyspx.shake_128f.generate_keypair(seed)
         signature = pyspx.shake_128f.sign(message, secret_key)
     elif type == 'shake_256f':
+        seed = secrets.token_bytes(config.seed_len_256f)
         public_key, secret_key = pyspx.shake_256f.generate_keypair(seed)
         signature = pyspx.shake_256f.sign(message, secret_key)
 
