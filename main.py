@@ -27,7 +27,7 @@ def batch_process(path_to_files, type='shake_128f'):
 
     for root, _, files in os.walk(path_to_files):
         for file_name in files:
-            if not (file_name.startswith('.') or file_name.endswith('.pem')):  # Reject hidden files and other PEMs
+            if not (file_name.startswith('.') or file_name.endswith('.pem') or file_name.endswith('.pub')):  # Reject hidden files and other PEMs
                 file_path = os.path.join(root, file_name)
                 try:
                     with open(file_path, 'rb') as file:
@@ -38,6 +38,43 @@ def batch_process(path_to_files, type='shake_128f'):
                         with open(pem_path, 'wb') as pem:
                             pem.write(sign)
                             print(f"PEM generated for '{file_path}'.")
+
+                        pub_path = file_path + '.pub'
+                        with open(pub_path, 'wb') as pem:
+                            pem.write(pk)
+                            print(f"PUB generated for '{file_path}'.")
+
+                except PermissionError:
+                    print(f"Permission denied for file '{file_path}'.")
+                except IOError as e:
+                    print(f"An I/O error occurred for file '{file_path}': {e}")
+                except Exception as e:
+                    print(f"An unexpected error occurred for file '{file_path}': {e}")
+
+def batch_verify(path_to_files, type='shake_128f'):
+    if not os.path.exists(path_to_files):
+        print(f"Error: Directory '{path_to_files}' does not exist.")
+        return
+
+    for root, _, files in os.walk(path_to_files):
+        for file_name in files:
+            if file_name.endswith('.pub'):
+                file_path_pub = os.path.join(root, file_name)
+                try:
+                    with open(file_path_pub, 'rb') as pub_file:
+                        pub_bytes = pub_file.read()
+                        pem_path = os.path.join(root, file_name[:-4]+".pem")
+                        with open(pem_path, 'rb') as pem_file:
+                            pem_bytes = pem_file.read()
+                            file_path = os.path.join(root, file_name[:-4])
+                            with open(file_path, 'rb') as file:
+                                file_bytes = file.read()
+
+                                if type == 'shake_128f':
+                                    print(f"Verification using '{file_path}' is: {pyspx.shake_128f.verify(file_bytes, pem_bytes, pub_bytes)}")
+                                elif type == 'shake_256f':
+                                    print(f"Verification using '{file_path}' is: {pyspx.shake_256f.verify(file_bytes, pem_bytes, pub_bytes)}")
+
                 except PermissionError:
                     print(f"Permission denied for file '{file_path}'.")
                 except IOError as e:
