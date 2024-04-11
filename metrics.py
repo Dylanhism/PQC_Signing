@@ -12,7 +12,7 @@ import main
 
 def graph():
     nRuns = 10
-    nAlgs = 3
+    nAlgs = 6
     process_times = np.zeros([nAlgs, nRuns])
     verify_times = np.zeros([nAlgs, nRuns])
     processAvgs = np.zeros([nAlgs])
