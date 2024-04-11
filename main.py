@@ -27,8 +27,8 @@ def prepare_signature(message: bytes, type: str):
         signature = pyspx.shake_256f.sign(message, secret_key)
     elif type == 'haraka_128f':
         seed = secrets.token_bytes(config.seed_len_128f)
-        public_key, secret_key = pyspx.haraka_192f.generate_keypair(seed)
-        signature = pyspx.haraka_192f.sign(message, secret_key)
+        public_key, secret_key = pyspx.haraka_128f.generate_keypair(seed)
+        signature = pyspx.haraka_128f.sign(message, secret_key)
     elif type == 'haraka_192f':
         seed = secrets.token_bytes(config.seed_len_192f)
         public_key, secret_key = pyspx.haraka_192f.generate_keypair(seed)
