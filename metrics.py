@@ -93,7 +93,7 @@ def graph():
 
     for i in range(nAlgs):
         processAvgs[i] = np.average(process_times[i])
-        verifyAvgs[i] = np.average(verifyAvgs[i])
+        verifyAvgs[i] = np.average(verify_times[i])
 
 
     labels= ['Shake128', 'Shake192', 'Shake256', 'Haraka128', 'Haraka192', 'Haraka256', 'Sha2-128', 'Sha2-192', 'Sha2-256']
