@@ -45,27 +45,27 @@ def graph():
 
         startTime = time.time()
         main.batch_process('./test', 'haraka_128f')
-        process_times[0][i] = time.time() - startTime
+        process_times[3][i] = time.time() - startTime
 
         startTime = time.time()
         main.batch_verify('./test', 'haraka_128f')
-        verify_times[0][i] = time.time() - startTime
+        verify_times[3][i] = time.time() - startTime
 
         startTime = time.time()
         main.batch_process('./test', 'haraka_192f')
-        process_times[1][i] = time.time() - startTime
+        process_times[4][i] = time.time() - startTime
 
         startTime = time.time()
         main.batch_verify('./test', 'haraka_192f')
-        verify_times[1][i] = time.time() - startTime
+        verify_times[4][i] = time.time() - startTime
 
         startTime = time.time()
         main.batch_process('./test', 'haraka_256f')
-        process_times[2][i] = time.time() - startTime
+        process_times[5][i] = time.time() - startTime
 
         startTime = time.time()
         main.batch_verify('./test', 'haraka_256f')
-        verify_times[2][i] = time.time() - startTime
+        verify_times[5][i] = time.time() - startTime
 
     for i in range(nAlgs):
         processAvgs[i] = np.average(process_times[i])
