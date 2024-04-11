@@ -12,7 +12,7 @@ import main
 
 def graph():
     nRuns = 10
-    nAlgs = 6
+    nAlgs = 9
     process_times = np.zeros([nAlgs, nRuns])
     verify_times = np.zeros([nAlgs, nRuns])
     processAvgs = np.zeros([nAlgs])
@@ -67,12 +67,36 @@ def graph():
         main.batch_verify('./test', 'haraka_256f')
         verify_times[5][i] = time.time() - startTime
 
+        startTime = time.time()
+        main.batch_process('./test', 'sha2_128f')
+        process_times[6][i] = time.time() - startTime
+
+        startTime = time.time()
+        main.batch_verify('./test', 'sha2_128f')
+        verify_times[6][i] = time.time() - startTime
+
+        startTime = time.time()
+        main.batch_process('./test', 'sha2_192f')
+        process_times[7][i] = time.time() - startTime
+
+        startTime = time.time()
+        main.batch_verify('./test', 'sha2_192f')
+        verify_times[7][i] = time.time() - startTime
+
+        startTime = time.time()
+        main.batch_process('./test', 'sha2_256f')
+        process_times[8][i] = time.time() - startTime
+
+        startTime = time.time()
+        main.batch_verify('./test', 'sha2_256f')
+        verify_times[8][i] = time.time() - startTime
+
     for i in range(nAlgs):
         processAvgs[i] = np.average(process_times[i])
         verifyAvgs[i] = np.average(verifyAvgs[i])
 
 
-    labels= ['Shake128', 'Shake192', 'Shake256', 'Haraka128', 'Haraka192', 'Haraka256']
+    labels= ['Shake128', 'Shake192', 'Shake256', 'Haraka128', 'Haraka192', 'Haraka256', 'Sha2-128', 'Sha2-192', 'Sha2-256']
 
     plt.figure()
     plt.bar(labels, processAvgs, color='red')

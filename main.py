@@ -3,6 +3,9 @@ import os
 import pyspx.shake_128f
 import pyspx.shake_192f
 import pyspx.shake_256f
+import pyspx.sha2_128f
+import pyspx.sha2_192f
+import pyspx.sha2_256f
 import pyspx.haraka_128f
 import pyspx.haraka_192f
 import pyspx.haraka_256f
@@ -25,6 +28,18 @@ def prepare_signature(message: bytes, type: str):
         seed = secrets.token_bytes(config.seed_len_256f)
         public_key, secret_key = pyspx.shake_256f.generate_keypair(seed)
         signature = pyspx.shake_256f.sign(message, secret_key)
+    elif type == 'sha2_128f':
+        seed = secrets.token_bytes(config.seed_len_128f)
+        public_key, secret_key = pyspx.sha2_128f.generate_keypair(seed)
+        signature = pyspx.sha2_128f.sign(message, secret_key)
+    elif type == 'sha2_192f':
+        seed = secrets.token_bytes(config.seed_len_192f)
+        public_key, secret_key = pyspx.sha2_192f.generate_keypair(seed)
+        signature = pyspx.sha2_192f.sign(message, secret_key)
+    elif type == 'sha2_256f':
+        seed = secrets.token_bytes(config.seed_len_256f)
+        public_key, secret_key = pyspx.sha2_256f.generate_keypair(seed)
+        signature = pyspx.sha2_256f.sign(message, secret_key)
     elif type == 'haraka_128f':
         seed = secrets.token_bytes(config.seed_len_128f)
         public_key, secret_key = pyspx.haraka_128f.generate_keypair(seed)
@@ -102,6 +117,12 @@ def batch_verify(path_to_files, type='shake_128f'):
                                     print(f"Verification using '{file_path}' is: {pyspx.haraka_192f.verify(file_bytes, pem_bytes, pub_bytes)}")
                                 elif type == 'haraka_256f':
                                     print(f"Verification using '{file_path}' is: {pyspx.haraka_256f.verify(file_bytes, pem_bytes, pub_bytes)}")
+                                elif type == 'sha2_128f':
+                                    print(f"Verification using '{file_path}' is: {pyspx.sha2_128f.verify(file_bytes, pem_bytes, pub_bytes)}")
+                                elif type == 'sha2_192f':
+                                    print(f"Verification using '{file_path}' is: {pyspx.sha2_192f.verify(file_bytes, pem_bytes, pub_bytes)}")
+                                elif type == 'sha2_256f':
+                                    print(f"Verification using '{file_path}' is: {pyspx.sha2_256f.verify(file_bytes, pem_bytes, pub_bytes)}")
 
                 except PermissionError:
                     print(f"Permission denied for file '{file_path}'.")
