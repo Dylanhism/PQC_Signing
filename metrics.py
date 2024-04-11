@@ -4,7 +4,6 @@
 # April 2024
 
 import time
-import os
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -13,7 +12,7 @@ import main
 
 def graph():
     nRuns = 10
-    nAlgs = 2
+    nAlgs = 3
     process_times = np.zeros([nAlgs, nRuns])
     verify_times = np.zeros([nAlgs, nRuns])
     processAvgs = np.zeros([nAlgs])
@@ -29,19 +28,51 @@ def graph():
         verify_times[0][i] = time.time() - startTime
 
         startTime = time.time()
-        main.batch_process('./test', 'shake_256f')
+        main.batch_process('./test', 'shake_192f')
         process_times[1][i] = time.time() - startTime
 
         startTime = time.time()
-        main.batch_verify('./test', 'shake_256f')
+        main.batch_verify('./test', 'shake_192f')
         verify_times[1][i] = time.time() - startTime
+
+        startTime = time.time()
+        main.batch_process('./test', 'shake_256f')
+        process_times[2][i] = time.time() - startTime
+
+        startTime = time.time()
+        main.batch_verify('./test', 'shake_256f')
+        verify_times[2][i] = time.time() - startTime
+
+        startTime = time.time()
+        main.batch_process('./test', 'haraka_128f')
+        process_times[0][i] = time.time() - startTime
+
+        startTime = time.time()
+        main.batch_verify('./test', 'haraka_128f')
+        verify_times[0][i] = time.time() - startTime
+
+        startTime = time.time()
+        main.batch_process('./test', 'haraka_192f')
+        process_times[1][i] = time.time() - startTime
+
+        startTime = time.time()
+        main.batch_verify('./test', 'haraka_192f')
+        verify_times[1][i] = time.time() - startTime
+
+        startTime = time.time()
+        main.batch_process('./test', 'haraka_256f')
+        process_times[2][i] = time.time() - startTime
+
+        startTime = time.time()
+        main.batch_verify('./test', 'haraka_256f')
+        verify_times[2][i] = time.time() - startTime
 
     for i in range(nAlgs):
         processAvgs[i] = np.average(process_times[i])
         verifyAvgs[i] = np.average(verifyAvgs[i])
 
 
-    labels= ['Shake128', 'Shake256']
+    labels= ['Shake128', 'Shake192', 'Shake256', 'Haraka128', 'Haraka192', 'Haraka256']
 
     plt.figure()
     plt.bar(labels, processAvgs, color='red')
