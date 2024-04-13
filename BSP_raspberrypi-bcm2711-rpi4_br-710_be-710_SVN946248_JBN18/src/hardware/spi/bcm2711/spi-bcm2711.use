@@ -1,0 +1,25 @@
+%C Driver for BCM2711 SPI controllers
+
+Syntax:
+    spi-master -d bcm2711 [option[,option ...]] ... &
+
+Options (to override autodetected defaults):
+
+    base          Base address for this SPI controller
+    clock         Defines the value of the clock source of the SPI, default reference clock:500MHz
+    rpanic        Defines panic threshold (default:48)
+    tpanic        Defines Write panic threshold(default:16)
+    rdreq         Defines DMA read request threshold(default:32)
+    tdreq         Defines DMA write request threshold(default:32)
+    dmarxbase     Defines DMA RX channel base address
+    dmatxbase     Defines DMA RX channel base address
+    opmode[1|2] Software operation Mode (interrupt-1, dma-2)
+
+Examples:
+    # Start SPI driver for RPI4 with base address and interrupt mode
+    spi-master -u0 -d bcm2711 base=0xfe204000,opmode=1
+
+    # Start SPI driver for RPI4 with SPI base address with DMA channels base address
+    spi-master -u0 -v3 -d bcm2711 base=0xFE204000,opmode=2,dmarxbase=0xfe007200,dmatxbase=0xfe007300
+
+Notes: this driver should only be used for spi (0,3,4,5,6). Dma transfer is not available for spi3.

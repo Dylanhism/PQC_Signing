@@ -1,0 +1,9 @@
+STATE=lookup
+INSTALLDIR=aarch64le/bin/
+INSTALLNAME=gpio-bcm2711
+NAME=gpio-bcm2711
+USER=builder
+HOST=docker-n3
+DATE=2021/11/25-15:12:23-EST
+TAGID=BSP_raspberrypi-bcm2711-rpi4_br-710_be-710_946248_18
+DESCRIPTION=BCM2711 gpio utility

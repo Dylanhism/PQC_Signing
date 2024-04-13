@@ -1,0 +1,23 @@
+BCM2711 I2C manager
+
+%C [options]
+
+Options:
+-p addr         I2C base address
+-i irq          I2C interrupt (default: 149)
+-c clock        Default to 5000(100KHz)
+-v              Set verbose
+-s slave addr   Slave address(only 7-bit addr supported)
+
+
+Generic options:
+--b bus_speed       Default bus speed. (Default: 100000)
+--m max_msg_len     Minimum length of resmgr receive buffer.
+                    (Default: 128 bytes)
+--n nparts          Minimum number of iov_t's in resmgr context.
+                    (Default: 2)
+--u unit            Unit number. Number to append to device name
+                    prefix (/dev/i2c). (Default: 0)
+
+example:
+i2c-bcm2711  -p0xfe804000 --b100000 --u1

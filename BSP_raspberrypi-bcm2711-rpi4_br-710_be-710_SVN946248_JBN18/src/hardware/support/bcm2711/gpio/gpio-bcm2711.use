@@ -1,0 +1,33 @@
+GPIO utility for BCM2711 SOC
+
+Syntax:
+%C [get|set|funcs|raw] [gpio number] [options]
+
+options:
+  GPIO is a comma-separated list of pin numbers or ranges (without spaces),
+  e.g. 4 or 18-21 or 7,9-11
+  Note that omitting [GPIO] from raspi-gpio get prints all GPIOs.
+  raspi-gpio funcs will dump all the possible GPIO alt funcions in CSV format
+  or if [GPIO] is specified the alternate funcs just for that specific GPIO.
+  Valid [options] for gpio-bcm2711 set are:
+    ip      set GPIO as input
+    op      set GPIO as output
+    a0-a5   set GPIO to alternate function alt0-alt5
+    pu      set GPIO in-pad pull up
+    pd      set GPIO pin-pad pull down
+    pn      set GPIO pull none (no pull)
+    dh      set GPIO to drive to high (1) level (only valid if set to be an output)
+    dl      set GPIO to drive low (0) level (only valid if set to be an output)
+
+Examples:
+  gpio-bcm2711 get              Prints state of all GPIOs one per line
+  gpio-bcm2711 get 20           Prints state of GPIO20
+  gpio-bcm2711 get 20,21        Prints state of GPIO20 and GPIO21
+  gpio-bcm2711 set 20 a5        Set GPIO20 to ALT5 function (GPCLK0)
+  gpio-bcm2711 set 20 pu        Enable GPIO20 ~50k in-pad pull up
+  gpio-bcm2711 set 20 pd        Enable GPIO20 ~50k in-pad pull down
+  gpio-bcm2711 set 20 op        Set GPIO20 to be an output
+  gpio-bcm2711 set 20 dl        Set GPIO20 to output low/zero (must already be set as an output)
+  gpio-bcm2711 set 20 ip pd     Set GPIO20 to input with pull down
+  gpio-bcm2711 set 35 a0 pu     Set GPIO35 to ALT0 function (SPI_CE1_N) with pull up
+  gpio-bcm2711 set 20 op pn dh  Set GPIO20 to ouput with no pull and driving high

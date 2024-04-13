@@ -1,0 +1,9 @@
+STATE=lookup
+INSTALLDIR=aarch64le/bin/
+INSTALLNAME=wdtkick
+NAME=wdtkick
+USER=builder
+HOST=docker-n3
+DATE=2021/11/25-15:12:24-EST
+TAGID=BSP_raspberrypi-bcm2711-rpi4_br-710_be-710_946248_18
+DESCRIPTION=Generic watchdog kick utility

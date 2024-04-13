@@ -1,0 +1,43 @@
+%C - Mixer DLL for the WM8960 codec
+
+This is a DLL of the io-audio system.
+
+Configuration file options:
+    wm8960_mclk=num                                   Clock Frequency (default: 24576000)
+    wm8960_adclrc=<0|1>                               ADCLRC/GPIO1 Function Select (0=ADCLRC(default), 1=GPIO pin)
+    wm8960_i2cdev=num                                 I2C device used (0,1,2)
+    wm8960_i2caddr=num                                I2C device address (default: 0x1A)
+    wm8960_clk_mode=<master|slave>                    Codec master/slave mode (default: slave)
+    wm8960_mic_left2right=<0|1>                       Source right channel data from left ADC
+    wm8960_micbias=<0|1>                              Enables microphone bias (default: 0)
+    wm8960_output_enable=<speaker|headphone|all>      Enable output path, speaker or headphone or all (default: all)
+    wm8960_hpsel=<nc|gpio1|jd2|jd3>                   Enable headphone select using the specified codec input (default: nc)
+                                                         nc    - Not connected (default)
+                                                         gpio1 - GPIO1 (disables ADCLRC)
+                                                         jd2   - Jack detect 2 (disables LINPUT3)
+                                                         jd3   - Jack detect 3 (disables RINPUT3)
+    wm8960_mic=<enable[:differential:input2|input3]>  Enable Mic input (LINPUT1) in single-ended mode (default: enable)
+                                                      Specify the optional differential option to configure
+                                                      as a differential input using either input2 or input3
+                                                      as the additional non-inverting input.
+    wm8960_line2=<enable[:dB]>                        Enable input 2 as a Line input with an optional gain boost value dB (default: disable)
+                                                      Valid boost values: -12, -9, -6, -3, 0, 3, 6 (default 0dB)
+    wm8960_line3=<enable[:dB]>                        Enable input 3 as a Line input with an optional gain boost value dB (default: disable)
+                                                      Valid boost values: -12, -9, -6, -3, 0, 3, 6 (default 0dB)
+
+Note: The analog inputs are multi-function pins and can only be configured for one of their functions.
+      For example input3 can be configured as the headphone select, the Mic differential non-inverting input
+      or as a line input. Refer to your board schematics to determine how input pin should be configured.
+
+All codec options are to be included under the [ctrl] section for the audio device the mixer DLL is to be mounted under.
+
+[ctrl]
+name=mxsai-mx8
+options=saibase=1,tx_msel=1,rx_msel=1,tx_sample_size=4,rx_sample_size=4
+mixer_dll=wm8960
+wm8960_mclk=24576000
+wm8960_adclrc=1
+wm8960_i2cdev=10
+wm8960_i2caddr=0x1A
+wm8960_mic_left2right=1
+wm8960_micbias=1

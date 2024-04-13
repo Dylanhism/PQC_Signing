@@ -1,0 +1,15 @@
+%C Driver for Raspberry PI 4 ENET
+
+Syntax:
+  io-pkt-v6-hc -d genet
+
+Information:
+  MAC address   : Always using the board MAC address as interface MAC.
+  transmit      : Always using 256 TX DMA hardware descriptors.
+  receive       : Always using 256 RX DMA hardware descriptors.
+
+Examples:
+  # Start io-pkt using the genet driver:
+  io-pkt-v6-hc -d genet
+  ifconfig genet0 192.0.2.1
+

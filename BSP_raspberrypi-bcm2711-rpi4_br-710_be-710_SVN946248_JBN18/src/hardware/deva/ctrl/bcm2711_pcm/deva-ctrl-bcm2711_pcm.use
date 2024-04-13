@@ -1,0 +1,34 @@
+%C - PCM/I2S Sound driver for BCM2711
+
+This is an io-audio system DLL.
+
+command:
+
+   io-audio  -m pool_name=below1G,pool_size=260 -d bcm2711_pcm [bcm2711_pcm_opt[,bcm2711_pcm_opt]*]
+
+bcm2711_pcm_opt option keys:
+
+tx_voices=value     :  Playback channel voices (0 if playback not configured, 2 otherwise, default is 2)
+rx_voices=value     :  Capture channel enable (0 if capture not configured, 2 otherwise, default is 0)
+tx_dma=value        :  DMA channel used for playback (0-14, default is 2)
+rx_dma=value        :  DMA channel used for capture (0-14, default is 3)
+tx_dreq=value       :  DMA threshold for DREQ signal for playback (0-127, default is 48)
+tx_panic=value      :  DMA threshold for PANIC signal for playback (0-127, default is 16)
+rx_dreq=value       :  DMA threshold for DREQ signal for capture (0-127, default is 32)
+rx_panic=value      :  DMA threshold for PANIC signal for capture (0-127, default is 48)
+gpio=value          :  GPIO pin set ("primary" or "secondary", default is "primary")
+clk_src=value       :  Clock manager source ("osc" or "plld", default is "osc")
+clk_mash=value      :  Clock manager mash value (0-3, default is 1)
+clk_mode=value      :  Clock mode for CLK and FS clocks signals ("master" or "slave", default is "master")
+rate=value[:value]  :  Sample rate min/max value in Hz (default 8,000/192,000), or locked sample rate if only one value is provided
+bits=value          :  Sample bit width in bits (16, 24 or 32, default is 32)
+bit_delay=value     :  Bit delay of first bit in a frame in bit clock cycles (default is 1, corresponding to I2S mode)
+clk_pol=value       :  Clock polarity (0-1, default is 0)
+                       0 - Outputs change on falling edge of clock, inputs are sampled on rising edge (I2S mode).
+                       1 - Outputs change on rising edge of clock, inputs are sampled on falling edge (PCM mode).
+fs_pol=value        :  Frame Sync polarity (0-1, default is 0)
+                       0 - FS is normally high and goes low to indicate frame sync (I2S mode).
+                       1 - FS is normally low and goes high to indicate frame sync (PCM mode).
+
+Note: The pool_size should be indicated as 260k (256+4) for a single channel (playback or capture), or 516k (512+4) for two channels (playback and capture).
+The 4k addition accounts for the memory used for DMA control blocks.

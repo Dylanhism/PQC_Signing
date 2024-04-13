@@ -1,0 +1,22 @@
+%C - PWM Sound driver for BCM2711
+
+This is an io-audio system DLL.
+
+command:
+
+   io-audio  -m pool_name=below1G,pool_size=260 -d bcm2711_pwm [bcm2711_pwm_opt[,bcm2711_pwm_opt]*]
+
+bcm2711_pwm_opt option keys:
+
+pwm=value           :  PWM controller (0-1)
+dma=value           :  DMA channel (0-14, default value is 2)
+rate=value[:value]  :  Sample rate min/max value in Hz (default 44,100/48,000), or locked sample rate if only one value is provided
+clk_mash=value      :  Clock manager mash value (0-3, default is 1)
+msen=value          :  M/S enable (0..1, default is 1) - operation mode is PWM N/M modulation (0) or PWM M/S serialization (1)
+dreq=value          :  DMA Threshold for DREQ signal (0-127, default is 7)
+panic=value         :  DMA Threshold for PANIC signal (0-127, default is 7)
+
+Note: With increased sample rate values, the sample precision (how many MSB bits of the sample are actually used) decreases.
+The optimal range is 44,100 to 48,000 Hz, where we have an optimal compromise between sample precision (10 bits) and sample rate.
+
+Note: The pool_size should be indicated as 260k (256+4). The 4k addition accounts for the memory used for DMA control blocks.

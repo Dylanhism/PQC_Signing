@@ -1,0 +1,50 @@
+
+%C - Mixer DLL for the TI PCM512X DAC
+
+This is a DLL of the io-audio system.
+
+Required configuration file options:
+    pcm512x_i2c_dev=<value>            I2C device number corresponding to the PCM512X DAC
+    pcm512x_i2c_addr=<value>           I2C slave address corresponding to the PCM512X DAC
+
+Optional configuration file options:
+    pcm512x_joint_vol=<enable|disable> Enable joint volume (when setting L-channel volume, it is applied to both channels, default: disable)
+    pcm512x_analog_gain=<float_value>  Set the analog gain in dB (possible values are -6, -5.2, 0, 0.8, default: 0)
+    pcm512x_gpio_out<n>=<selection>    Enable GPIO <n> (<n>=1..6) as output and output the selected signal.
+                                       Possible selection values are:
+                                       "dsp" - DSP output
+                                       "high" - GPIO set as high
+                                       "low" - GPIO set a low
+                                       "automute_b" - auto mute flag asserted for both channels
+                                       "automute_l" - auto mute flag asserted for left channel
+                                       "automute_r" - auto mute flag asserted for right channel
+                                       "clkinval" - clock invalid flag
+                                       "sdout" - serial data output
+                                       "anamute_l" - analog mute flag for left channel
+                                       "anamute_r" - analog mute flag for right channel
+                                       "plllock" - PLL lock flag
+                                       "cpclk" - charge pump clock
+                                       "undervolt0_7" - under voltage flag, asserted when XSMUTE voltage is higher than 0.7 DVDD
+                                       "undervolt0_3" - under voltage flag, asserted when XSMUTE voltage is higher than 0.3 DVDD
+                                       "pllout" - PLL output
+                                       By adding the suffix "_inv" to any of these selection value other than "high" and "low", the selected signal is inverted.
+                                       Default: GPIO <n> is an input.
+    pcm512x_debug=<enable|disable>     Enable register dumps (default: disable)
+
+
+
+All codec options are to be included under the [ctrl] section for the audio card the
+mixer DLL is to be mounted under.
+
+Example:
+[ctrl]
+name=bcm2711_pcm
+options=rate=48000,bits=16
+mixer_dll=pcm512x                      # Load deva-mixer-pcm512x.so
+pcm512x_i2c_dev=1                      # /dev/i2c1
+pcm512x_i2c_addr=77                    # 0x4D
+pcm512x_analog_gain=-6.0
+pcm512x_gpio_out3=anamute_l            # enable GPIO 3 as output and select analog mute flag for left channel as signal to be output
+pcm512x_gpio_out4=high                 # enable GPIO 4 as output and set high
+pcm512x_gpio_out6=plllock_inv          # enable GPIO 6 as output and select PLL lock flag inverted as signal to be output
+
